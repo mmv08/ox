@@ -517,7 +517,8 @@ export function serialize(
       }
 
       // EIP-155 (explicit chainId)
-      if (chainId > 0) return chainId * 2 + 35 + signature.v - 27
+      // Subtract first to keep the sum a safe integer.
+      if (chainId > 0) return chainId * 2 + 35 + (signature.v - 27)
 
       // Pre-EIP-155 (no chainId)
       const v = 27 + (signature.v === 27 ? 0 : 1)

@@ -1,4 +1,4 @@
-import { Hex, Rlp, Secp256k1, TxEnvelopeLegacy, Value } from 'ox'
+import { Hex, Rlp, Secp256k1, Signature, TxEnvelopeLegacy, Value } from 'ox'
 import { assertType, describe, expect, expectTypeOf, test } from 'vp/test'
 import { accounts } from '../../../test/constants/accounts.js'
 import { anvilMainnet } from '../../../test/prool.js'
@@ -697,6 +697,42 @@ describe('serialize', () => {
       }
     `,
     )
+  })
+
+  test('behavior: signature + large chainId', () => {
+    // EIP-155 `v` sits just below `Number.MAX_SAFE_INTEGER`.
+    const transaction_chainId = TxEnvelopeLegacy.from({
+      ...transaction,
+      chainId: 4503599627370476,
+    })
+    const signature = Secp256k1.sign({
+      payload: TxEnvelopeLegacy.getSignPayload(transaction_chainId),
+      privateKey: accounts[0].privateKey,
+    })
+    const serialized = TxEnvelopeLegacy.serialize(transaction_chainId, {
+      signature,
+    })
+    const envelope = TxEnvelopeLegacy.deserialize(serialized)
+    expect(envelope).toMatchInlineSnapshot(`
+      {
+        "chainId": 4503599627370476,
+        "gasPrice": 2000000000n,
+        "nonce": 785n,
+        "r": "0xe6de55803fade51a1a1df43775ee4296e7019017b7c89d33c3aadc265c2d4468",
+        "s": "0x51a2f044a5614b7d97c1549fe5030d35573c546df19a45693fd0cfd06f72d162",
+        "to": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+        "type": "legacy",
+        "v": 9007199254740988,
+        "value": 1000000000000000000n,
+        "yParity": 1,
+      }
+    `)
+    expect(
+      Secp256k1.recoverAddress({
+        payload: TxEnvelopeLegacy.getSignPayload(envelope),
+        signature: Signature.extract(envelope)!,
+      }),
+    ).toBe(accounts[0].address)
   })
 
   test('behavior: inferred chainId', () => {
