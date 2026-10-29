@@ -1182,7 +1182,7 @@ describe('toRpc', () => {
           "to": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
           "transactionIndex": "0x2",
           "type": "0x0",
-          "v": "0x00",
+          "v": "0x0",
           "value": "0x0",
           "yParity": "0x0",
         }
@@ -1230,7 +1230,7 @@ describe('toRpc', () => {
           "to": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
           "transactionIndex": null,
           "type": "0x0",
-          "v": "0x00",
+          "v": "0x0",
           "value": "0xde0b6b3a7640000",
           "yParity": "0x0",
         }
@@ -1259,6 +1259,49 @@ describe('toRpc', () => {
         yParity: 0,
       })
       expect(rpc.transactionIndex).toBe('0x0')
+    })
+
+    test('behavior: really large chainId', () => {
+      const transaction = Transaction.fromRpc({
+        blockHash:
+          '0xc350d807505fb835650f0013632c5515592987ba169bbc6626d9fc54d91f0f0b',
+        blockNumber: '0x1',
+        chainId: '0xfffffffffffec',
+        from: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266',
+        gas: '0x5208',
+        gasPrice: '0x3b9aca00',
+        hash: '0x4f1a359723568bc6f5892d2840906afa8af86f96e77fab36aca2e2aab71b8c76',
+        input: '0x',
+        nonce: '0x0',
+        r: '0x73807308c06bf3360160b331f5444fee15cd66440b781a0199157bfeee50cf8b',
+        s: '0x5d553d40963065f7d4df5e8cd160236e79a6fafe1526cac5cf86a797b48798a0',
+        to: '0x70997970c51812dc3a010c7d01b50e0d17dc79c8',
+        transactionIndex: '0x0',
+        type: '0x0',
+        v: '0x1ffffffffffffc',
+        value: '0x1',
+      })
+      expect(Transaction.toRpc(transaction)).toMatchInlineSnapshot(`
+        {
+          "blockHash": "0xc350d807505fb835650f0013632c5515592987ba169bbc6626d9fc54d91f0f0b",
+          "blockNumber": "0x1",
+          "chainId": "0xfffffffffffec",
+          "from": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+          "gas": "0x5208",
+          "gasPrice": "0x3b9aca00",
+          "hash": "0x4f1a359723568bc6f5892d2840906afa8af86f96e77fab36aca2e2aab71b8c76",
+          "input": "0x",
+          "nonce": "0x0",
+          "r": "0x73807308c06bf3360160b331f5444fee15cd66440b781a0199157bfeee50cf8b",
+          "s": "0x5d553d40963065f7d4df5e8cd160236e79a6fafe1526cac5cf86a797b48798a0",
+          "to": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+          "transactionIndex": "0x0",
+          "type": "0x0",
+          "v": "0x1ffffffffffffc",
+          "value": "0x1",
+          "yParity": "0x1",
+        }
+      `)
     })
   })
 
@@ -1423,7 +1466,7 @@ describe('toRpc', () => {
           "to": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
           "transactionIndex": "0x2",
           "type": "0x2",
-          "v": "0x00",
+          "v": "0x0",
           "value": "0x0",
           "yParity": "0x0",
         }
@@ -1475,7 +1518,7 @@ describe('toRpc', () => {
           "to": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
           "transactionIndex": null,
           "type": "0x2",
-          "v": "0x00",
+          "v": "0x0",
           "value": "0xde0b6b3a7640000",
           "yParity": "0x0",
         }
@@ -1578,7 +1621,7 @@ describe('toRpc', () => {
           "to": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
           "transactionIndex": "0x2",
           "type": "0x1",
-          "v": "0x00",
+          "v": "0x0",
           "value": "0x0",
           "yParity": "0x0",
         }
@@ -1628,7 +1671,7 @@ describe('toRpc', () => {
           "to": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
           "transactionIndex": null,
           "type": "0x1",
-          "v": "0x00",
+          "v": "0x0",
           "value": "0xde0b6b3a7640000",
           "yParity": "0x0",
         }
@@ -1741,7 +1784,7 @@ describe('toRpc', () => {
           "to": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
           "transactionIndex": "0x2",
           "type": "0x3",
-          "v": "0x00",
+          "v": "0x0",
           "value": "0x0",
           "yParity": "0x0",
         }
@@ -1803,7 +1846,7 @@ describe('toRpc', () => {
           "to": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
           "transactionIndex": null,
           "type": "0x3",
-          "v": "0x00",
+          "v": "0x0",
           "value": "0xde0b6b3a7640000",
           "yParity": "0x0",
         }
@@ -1928,7 +1971,7 @@ describe('toRpc', () => {
           "to": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
           "transactionIndex": "0x2",
           "type": "0x4",
-          "v": "0x00",
+          "v": "0x0",
           "value": "0x0",
           "yParity": "0x0",
         }
@@ -2000,7 +2043,7 @@ describe('toRpc', () => {
           "to": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
           "transactionIndex": null,
           "type": "0x4",
-          "v": "0x00",
+          "v": "0x0",
           "value": "0xde0b6b3a7640000",
           "yParity": "0x0",
         }
