@@ -521,7 +521,12 @@ export function toRpc<pending extends boolean = false>(
     )
   if (typeof transaction.r === 'string') rpc.r = transaction.r
   if (typeof transaction.s === 'string') rpc.s = transaction.s
-  if (transaction.v !== undefined) rpc.v = Quantity.fromNumberish(transaction.v)
+  // Typed transactions send `v` as an alias of `yParity`.
+  if (transaction.v !== undefined)
+    rpc.v =
+      rpc.type !== '0x0' && transaction.yParity !== undefined
+        ? Quantity.fromNumberish(transaction.yParity)
+        : Quantity.fromNumberish(transaction.v)
   if (transaction.yParity !== undefined)
     rpc.yParity = Quantity.fromNumberish(transaction.yParity)
 

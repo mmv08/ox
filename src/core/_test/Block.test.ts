@@ -535,7 +535,7 @@ describe('toRpc', () => {
             "to": "0xd42b0ecf8a9f8ba9db7b0c989d73cf0bd5f83b66",
             "transactionIndex": "0xc",
             "type": "0x2",
-            "v": "0x1b",
+            "v": "0x0",
             "value": "0x15",
             "yParity": "0x0",
           },

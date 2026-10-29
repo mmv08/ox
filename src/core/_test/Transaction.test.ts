@@ -1360,9 +1360,57 @@ describe('toRpc', () => {
           "to": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
           "transactionIndex": "0x2",
           "type": "0x2",
-          "v": "0x1b",
+          "v": "0x0",
           "value": "0x9b6e64a8ec60000",
           "yParity": "0x0",
+        }
+      `)
+    })
+
+    test('behavior: v mirrors yParity', () => {
+      const transaction = Transaction.fromRpc({
+        accessList: [],
+        blockHash:
+          '0xc350d807505fb835650f0013632c5515592987ba169bbc6626d9fc54d91f0f0b',
+        blockNumber: '0x1',
+        chainId: '0x1',
+        from: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266',
+        gas: '0x5208',
+        hash: '0x353fdfc38a2f26115daadee9f5b8392ce62b84f410957967e2ed56b35338cdd0',
+        input: '0x',
+        maxFeePerGas: '0x2',
+        maxPriorityFeePerGas: '0x1',
+        nonce: '0x0',
+        r: '0x0000000000000000000000000000000000000000000000000000000000000001',
+        s: '0x0000000000000000000000000000000000000000000000000000000000000002',
+        to: '0x70997970c51812dc3a010c7d01b50e0d17dc79c8',
+        transactionIndex: '0x0',
+        type: '0x2',
+        v: '0x1',
+        value: '0x1',
+        yParity: '0x1',
+      })
+      expect(Transaction.toRpc(transaction)).toMatchInlineSnapshot(`
+        {
+          "accessList": [],
+          "blockHash": "0xc350d807505fb835650f0013632c5515592987ba169bbc6626d9fc54d91f0f0b",
+          "blockNumber": "0x1",
+          "chainId": "0x1",
+          "from": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+          "gas": "0x5208",
+          "hash": "0x353fdfc38a2f26115daadee9f5b8392ce62b84f410957967e2ed56b35338cdd0",
+          "input": "0x",
+          "maxFeePerGas": "0x2",
+          "maxPriorityFeePerGas": "0x1",
+          "nonce": "0x0",
+          "r": "0x0000000000000000000000000000000000000000000000000000000000000001",
+          "s": "0x0000000000000000000000000000000000000000000000000000000000000002",
+          "to": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+          "transactionIndex": "0x0",
+          "type": "0x2",
+          "v": "0x1",
+          "value": "0x1",
+          "yParity": "0x1",
         }
       `)
     })
@@ -1579,7 +1627,7 @@ describe('toRpc', () => {
           "to": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
           "transactionIndex": "0x2",
           "type": "0x1",
-          "v": "0x1b",
+          "v": "0x0",
           "value": "0x9b6e64a8ec60000",
           "yParity": "0x0",
         }
@@ -1742,7 +1790,7 @@ describe('toRpc', () => {
           "to": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
           "transactionIndex": "0x2",
           "type": "0x3",
-          "v": "0x1b",
+          "v": "0x0",
           "value": "0x9b6e64a8ec60000",
           "yParity": "0x0",
         }
@@ -1929,7 +1977,7 @@ describe('toRpc', () => {
           "to": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",
           "transactionIndex": "0x2",
           "type": "0x4",
-          "v": "0x1b",
+          "v": "0x0",
           "value": "0x9b6e64a8ec60000",
           "yParity": "0x0",
         }
