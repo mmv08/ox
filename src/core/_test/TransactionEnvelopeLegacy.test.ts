@@ -900,6 +900,38 @@ describe('toRpc', () => {
     expect(transaction.v).toBe('0x26')
   })
 
+  test('behavior: signed with `from(..., { signature })`', () => {
+    const envelope = TxEnvelopeLegacy.from({
+      chainId: 1,
+      gas: 21000n,
+      gasPrice: Value.fromGwei('10'),
+      nonce: 0n,
+      to: '0x70997970c51812dc3a010c7d01b50e0d17dc79c8',
+      value: Value.fromEther('1'),
+    })
+    const signature = Secp256k1.sign({
+      payload: TxEnvelopeLegacy.getSignPayload(envelope),
+      privateKey: accounts[0].privateKey,
+    })
+    const signed = TxEnvelopeLegacy.from(envelope, { signature })
+    expect(TxEnvelopeLegacy.toRpc(signed)).toMatchInlineSnapshot(`
+      {
+        "chainId": "0x1",
+        "data": undefined,
+        "gas": "0x5208",
+        "gasPrice": "0x2540be400",
+        "nonce": "0x0",
+        "r": "0xf3dac04e798a62cbde0d58542522e29a7baf38ba037888192a7a6b6f0b7a90f0",
+        "s": "0x45de42cbcf7599d0babf753ed1795b8936ce00e1ce879010f1748388212658dd",
+        "to": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+        "type": "0x0",
+        "v": "0x25",
+        "value": "0xde0b6b3a7640000",
+        "yParity": "0x0",
+      }
+    `)
+  })
+
   test('behavior: pre-EIP-155 (no chainId)', () => {
     const transaction = TxEnvelopeLegacy.toRpc({
       to: '0x70997970c51812dc3a010c7d01b50e0d17dc79c8',

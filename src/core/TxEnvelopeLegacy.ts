@@ -607,9 +607,9 @@ export function toRpc(envelope: toRpc.Input): Rpc {
       ? {
           ...Signature.toRpc(signature),
           v: (() => {
-            // Prefer the original `v` from the envelope when present
-            // (preserves EIP-155 `v = chainId * 2 + 35 + yParity`).
-            if (typeof envelope.v === 'number')
+            // Keep a stored EIP-155 `v` (`chainId * 2 + 35 + yParity` >= 37).
+            // `from(..., { signature })` stores `27`/`28`, which falls through.
+            if (typeof envelope.v === 'number' && envelope.v >= 37)
               return Hex.fromNumber(envelope.v)
             // Otherwise derive EIP-155 `v` from `chainId` + `yParity`.
             if (typeof envelope.chainId === 'number' && envelope.chainId > 0)
